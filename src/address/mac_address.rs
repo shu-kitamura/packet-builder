@@ -1,4 +1,5 @@
 const MULTICAST_BIT: u8 = 0x01;
+const LOCAL_BIT: u8 = 0x02;
 
 #[derive(Debug, PartialEq)]
 pub struct MacAddress(pub u8, pub u8, pub u8, pub u8, pub u8, pub u8);
@@ -26,6 +27,14 @@ impl MacAddress {
 
     pub fn is_unicast(&self) -> bool {
         !self.is_multicast()
+    }
+
+    pub fn is_local(&self) -> bool {
+        (self.0 & LOCAL_BIT) == LOCAL_BIT
+    }
+
+    pub fn is_universal(&self) -> bool {
+        !self.is_local()
     }
 }
 
@@ -80,5 +89,23 @@ mod tests {
 
         let mac = MacAddress::new(0x01, 0x02, 0x03, 0x04, 0x05, 0x06);
         assert!(!mac.is_unicast());
+    }
+
+    #[test]
+    fn test_is_local() {
+        let mac = MacAddress::new(0x02, 0x02, 0x03, 0x04, 0x05, 0x06);
+        assert!(mac.is_local());
+
+        let mac = MacAddress::new(0x01, 0x02, 0x03, 0x04, 0x05, 0x06);
+        assert!(!mac.is_local());
+    }
+
+    #[test]
+    fn test_is_universal() {
+        let mac = MacAddress::new(0x01, 0x02, 0x03, 0x04, 0x05, 0x06);
+        assert!(mac.is_universal());
+
+        let mac = MacAddress::new(0x02, 0x02, 0x03, 0x04, 0x05, 0x06);
+        assert!(!mac.is_universal());
     }
 }
