@@ -21,6 +21,7 @@ pub struct EthernetFrame<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::address::mac_address::MacAddress;
     use header::EthernetHeader;
 
     #[test]
@@ -38,8 +39,12 @@ mod tests {
         let ethernet_frame = EthernetFrame::from_bytes(bytes);
 
         let expect_header = EthernetHeader {
-            destination_mac_address: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff],
-            source_mac_address: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+            destination_mac_address: MacAddress {
+                octets: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff],
+            },
+            source_mac_address: MacAddress {
+                octets: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+            },
             ethertype: [0x08, 0x00],
         };
         let expect_payload: &[u8] = &[
