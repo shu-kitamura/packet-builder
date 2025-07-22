@@ -53,23 +53,15 @@ mod tests {
         let builder = PacketBuilder::new();
         let expect = EthernetFrame {
             header: EthernetHeader {
-                destination_mac_address: MacAddress {
-                    octets: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff],
-                },
-                source_mac_address: MacAddress {
-                    octets: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
-                },
+                destination_mac_address: MacAddress(0xff, 0xff, 0xff, 0xff, 0xff, 0xff),
+                source_mac_address: MacAddress(0x00, 0x00, 0x00, 0x00, 0x00, 0x00),
                 ethertype: [0x08, 0x00],
             },
             payload: &[0x45, 0x00],
         };
         let actual = builder.ethernet(
-            MacAddress {
-                octets: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff],
-            },
-            MacAddress {
-                octets: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
-            },
+            MacAddress(0xff, 0xff, 0xff, 0xff, 0xff, 0xff),
+            MacAddress(0x00, 0x00, 0x00, 0x00, 0x00, 0x00),
             [0x08, 0x00],
             &[0x45, 0x00],
         );
