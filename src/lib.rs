@@ -1,7 +1,9 @@
 #![no_std]
 
+pub mod address;
 pub mod datalink;
 
+use crate::address::mac_address::MacAddress;
 use datalink::ethernet::EthernetFrame;
 use datalink::ethernet::header::EthernetHeader;
 
@@ -20,8 +22,8 @@ impl PacketBuilder {
 
     pub fn ethernet<'a>(
         &self,
-        destination: [u8; 6],
-        source: [u8; 6],
+        destination: MacAddress,
+        source: MacAddress,
         ethertype: [u8; 2],
         payload: &'a [u8],
     ) -> EthernetFrame<'a> {
@@ -51,15 +53,23 @@ mod tests {
         let builder = PacketBuilder::new();
         let expect = EthernetFrame {
             header: EthernetHeader {
-                destination_mac_address: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff],
-                source_mac_address: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+                destination_mac_address: MacAddress {
+                    octets: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff],
+                },
+                source_mac_address: MacAddress {
+                    octets: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+                },
                 ethertype: [0x08, 0x00],
             },
             payload: &[0x45, 0x00],
         };
         let actual = builder.ethernet(
-            [0xff, 0xff, 0xff, 0xff, 0xff, 0xff],
-            [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+            MacAddress {
+                octets: [0xff, 0xff, 0xff, 0xff, 0xff, 0xff],
+            },
+            MacAddress {
+                octets: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
+            },
             [0x08, 0x00],
             &[0x45, 0x00],
         );
