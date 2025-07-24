@@ -57,7 +57,7 @@ mod tests {
     }
 
     #[test]
-    fn test_to_bytes() {
+    fn test_octets() {
         let mac = MacAddr::new(1, 2, 3, 4, 5, 6);
         let expect = [1, 2, 3, 4, 5, 6];
         let actual = mac.octets();
