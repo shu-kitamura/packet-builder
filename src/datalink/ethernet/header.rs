@@ -1,19 +1,19 @@
-use crate::address::mac_address::MacAddress;
+use crate::address::mac_addr::MacAddr;
 
 #[derive(Debug, PartialEq)]
 pub struct EthernetHeader {
-    pub destination_mac_address: MacAddress,
-    pub source_mac_address: MacAddress,
+    pub destination_mac_address: MacAddr,
+    pub source_mac_address: MacAddr,
     pub ethertype: [u8; 2],
 }
 
 impl EthernetHeader {
     pub fn from_bytes(bytes: &[u8]) -> Self {
         EthernetHeader {
-            destination_mac_address: MacAddress::new(
+            destination_mac_address: MacAddr::new(
                 bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5],
             ),
-            source_mac_address: MacAddress::new(
+            source_mac_address: MacAddr::new(
                 bytes[6], bytes[7], bytes[8], bytes[9], bytes[10], bytes[11],
             ),
             ethertype: bytes[12..14]
@@ -26,7 +26,7 @@ impl EthernetHeader {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::address::mac_address::MacAddress;
+    use crate::address::mac_addr::MacAddr;
 
     #[test]
     fn test_ethernet_header_from_bytes() {
@@ -37,8 +37,8 @@ mod tests {
         ];
         let actual = EthernetHeader::from_bytes(bytes);
         let expect = EthernetHeader {
-            destination_mac_address: MacAddress(0xff, 0xff, 0xff, 0xff, 0xff, 0xff),
-            source_mac_address: MacAddress(0x00, 0x00, 0x00, 0x00, 0x00, 0x00),
+            destination_mac_address: MacAddr(0xff, 0xff, 0xff, 0xff, 0xff, 0xff),
+            source_mac_address: MacAddr(0x00, 0x00, 0x00, 0x00, 0x00, 0x00),
             ethertype: [0x08, 0x00],
         };
         assert_eq!(actual, expect);
