@@ -29,8 +29,8 @@ impl PacketBuilder {
     ) -> EthernetFrame<'a> {
         EthernetFrame {
             header: EthernetHeader {
-                destination_mac_address: destination,
-                source_mac_address: source,
+                dst: destination,
+                src: source,
                 ethertype,
             },
             payload,
@@ -53,8 +53,8 @@ mod tests {
         let builder = PacketBuilder::new();
         let expect = EthernetFrame {
             header: EthernetHeader {
-                destination_mac_address: MacAddr(0xff, 0xff, 0xff, 0xff, 0xff, 0xff),
-                source_mac_address: MacAddr(0x00, 0x00, 0x00, 0x00, 0x00, 0x00),
+                dst: MacAddr(0xff, 0xff, 0xff, 0xff, 0xff, 0xff),
+                src: MacAddr(0x00, 0x00, 0x00, 0x00, 0x00, 0x00),
                 ethertype: [0x08, 0x00],
             },
             payload: &[0x45, 0x00],
