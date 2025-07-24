@@ -1,5 +1,3 @@
-use core::fmt;
-
 const MULTICAST_BIT: u8 = 0x01;
 const LOCAL_BIT: u8 = 0x02;
 
@@ -40,21 +38,9 @@ impl MacAddr {
     }
 }
 
-impl fmt::Display for MacAddr {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "{:02x}:{:02x}:{:02x}:{:02x}:{:02x}:{:02x}",
-            self.0, self.1, self.2, self.3, self.4, self.5
-        )
-    }
-}
-
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
     use super::*;
-    use alloc::string::ToString;
 
     #[test]
     fn test_new() {
@@ -121,13 +107,5 @@ mod tests {
 
         let mac = MacAddr::new(0x02, 0x02, 0x03, 0x04, 0x05, 0x06);
         assert!(!mac.is_universal());
-    }
-
-    #[test]
-    fn test_display() {
-        let mac = MacAddr::new(0x00, 0x01, 0x02, 0x03, 0x04, 0x05);
-        let expect = "00:01:02:03:04:05";
-        let actual = mac.to_string();
-        assert_eq!(expect, actual);
     }
 }
