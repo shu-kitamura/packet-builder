@@ -13,7 +13,7 @@ impl MacAddr {
         MacAddr(0xff, 0xff, 0xff, 0xff, 0xff, 0xff)
     }
 
-    pub fn to_bytes(&self) -> [u8; 6] {
+    pub fn octets(&self) -> [u8; 6] {
         [self.0, self.1, self.2, self.3, self.4, self.5]
     }
 
@@ -60,7 +60,7 @@ mod tests {
     fn test_to_bytes() {
         let mac = MacAddr::new(1, 2, 3, 4, 5, 6);
         let expect = [1, 2, 3, 4, 5, 6];
-        let actual = mac.to_bytes();
+        let actual = mac.octets();
         assert_eq!(expect, actual);
     }
 
