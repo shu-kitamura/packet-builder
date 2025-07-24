@@ -10,12 +10,8 @@ pub struct EthernetHeader {
 impl EthernetHeader {
     pub fn from_bytes(bytes: &[u8]) -> Self {
         EthernetHeader {
-            dst: MacAddr::new(
-                bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5],
-            ),
-            src: MacAddr::new(
-                bytes[6], bytes[7], bytes[8], bytes[9], bytes[10], bytes[11],
-            ),
+            dst: MacAddr::new(bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5]),
+            src: MacAddr::new(bytes[6], bytes[7], bytes[8], bytes[9], bytes[10], bytes[11]),
             ethertype: bytes[12..14]
                 .try_into()
                 .expect("slice with incorrect length"),
