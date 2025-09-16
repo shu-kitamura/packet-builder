@@ -34,6 +34,7 @@ extern crate alloc;
 
 pub mod address;
 pub mod datalink;
+pub mod network;
 pub mod transport;
 
 use crate::address::mac_addr::MacAddr;
