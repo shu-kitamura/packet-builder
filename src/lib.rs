@@ -1,31 +1,31 @@
 #![no_std]
 
 //! # Packet Builder
-//!
+//! 
 //! A no_std library for building network packets.
-//!
+//! 
 //! ## TCP Example
-//!
+//! 
 //! ```ignore
 //! use packet_builder::transport::tcp::{TcpPacket, options::TcpOption};
-//!
+//! 
 //! // Create a TCP SYN packet with MSS option
 //! let payload = b"";
 //! let mut packet = TcpPacket::new(12345, 80, payload);
-//!
+//! 
 //! // Set SYN flag
 //! packet.header.flags.syn = true;
 //! packet.header.sequence_number = 0x12345678;
 //! packet.header.window = 65535;
-//!
+//! 
 //! // Add Maximum Segment Size option
 //! packet.options.add(TcpOption::MaximumSegmentSize(1460));
-//!
+//! 
 //! // Generate packet bytes with checksum
 //! let src_ip = [192, 168, 1, 100];
 //! let dst_ip = [192, 168, 1, 1];
 //! let packet_bytes = packet.to_bytes_ipv4(src_ip, dst_ip);
-//!
+//! 
 //! // packet_bytes now contains a complete TCP segment
 //! assert_eq!(24, packet_bytes.len()); // 20-byte header + 4-byte MSS option
 //! ```
